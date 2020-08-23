@@ -197,7 +197,7 @@ def breedIndividuals(l, mating_strategy, genderMatters, selective_pressure, ince
 
 	
 
-	while len(allAlive) != 0 and generations  < 50000:
+	while len(allAlive) != 0 and generations  < 100000:
 		if generations % 1000 == 500:
 			print(generations, len(allAlive))
 		Ind = allAlive.pop()
@@ -222,12 +222,14 @@ def breedIndividuals(l, mating_strategy, genderMatters, selective_pressure, ince
 			print("No suitable mates")
 			break
 		allAlive.add(Ind)
+		if len(allAlive) > 1000:
+			allAlive = set(random.sample(allAlive, 1000))
 		generations += 1
 	return allAlive
 
 
 l = []
-for i in range(400):
+for i in range(1000):
 	l.append(NeuralRobot())
 
 adam = NeuralRobot()
@@ -266,6 +268,7 @@ plt.hist(allMoveTotals, alpha = 0.5, label="pre")
 
 
 RANDOM_MATING = 4
+# BASED_ON_WEALTH = 5
 
 results = list(breedIndividuals(l,RANDOM_MATING, genderMatters = False, selective_pressure = MOVESANDWINNING, incestIsBanned=True))
 
